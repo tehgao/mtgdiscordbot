@@ -1,6 +1,7 @@
 package com.alvingao.discordbot.bot;
 
 import com.alvingao.discordbot.handlers.DeckGeneratorHandler;
+import com.alvingao.discordbot.handlers.Handlers;
 import com.alvingao.discordbot.handlers.IHandler;
 import sx.blah.discord.api.IDiscordClient;
 import sx.blah.discord.api.events.EventDispatcher;
@@ -24,15 +25,12 @@ public class MessageBot extends BaseBot implements IListener<MessageReceivedEven
         EventDispatcher dispatcher = discordClient.getDispatcher(); // Gets the client's event dispatcher
         dispatcher.registerListener(this); // Registers this bot as an event listener
 
-        handlers = new ArrayList<IHandler>();
-
-        this.handlers.add(new DeckGeneratorHandler());
+        handlers = Handlers.getHandlers();
     }
 
     /**
      * Called when the client receives a message.
      */
-    @Override
     public void handle(MessageReceivedEvent event) {
         IMessage message = event.getMessage(); // Gets the message from the event object NOTE: This is not the content of the message, but the object itself
         IChannel channel = message.getChannel(); // Gets the channel in which this message was sent.

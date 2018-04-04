@@ -1,5 +1,8 @@
 package com.alvingao.discordbot.handlers;
 
+/**
+ * Interface for delineating a message handler.
+ */
 public interface IHandler {
     /**
      * Determines whether the Handler in question handles the current message.
