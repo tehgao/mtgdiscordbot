@@ -1,4 +1,4 @@
-package handlers;
+package com.alvingao.discordbot.handlers;
 
 import javafx.util.Pair;
 

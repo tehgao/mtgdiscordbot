@@ -1,7 +1,7 @@
-package bot;
+package com.alvingao.discordbot.bot;
 
-import handlers.DeckGeneratorHandler;
-import handlers.IHandler;
+import com.alvingao.discordbot.handlers.DeckGeneratorHandler;
+import com.alvingao.discordbot.handlers.IHandler;
 import sx.blah.discord.api.IDiscordClient;
 import sx.blah.discord.api.events.EventDispatcher;
 import sx.blah.discord.api.events.IListener;
