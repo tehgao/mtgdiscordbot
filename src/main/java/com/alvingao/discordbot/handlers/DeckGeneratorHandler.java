@@ -1,7 +1,5 @@
 package com.alvingao.discordbot.handlers;
 
-import javafx.util.Pair;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -66,5 +64,22 @@ public class DeckGeneratorHandler implements IHandler {
 
     public String respond(String string) {
         return this.getDeck();
+    }
+
+    private class Pair<U, V> {
+        U key;
+        V value;
+        public Pair(U key, V value) {
+            this.key = key;
+            this.value = value;
+        }
+
+        public U getKey() {
+            return this.key;
+        }
+
+        public V getValue() {
+            return this.value;
+        }
     }
 }
