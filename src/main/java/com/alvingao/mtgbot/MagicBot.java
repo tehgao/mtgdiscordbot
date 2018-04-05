@@ -1,5 +1,6 @@
 package com.alvingao.mtgbot;
 
+import java.util.Arrays;
 import java.util.HashMap;
 
 import javax.management.openmbean.KeyAlreadyExistsException;
@@ -8,6 +9,12 @@ import com.alvingao.mtgbot.plugins.IPlugin;
 
 import sx.blah.discord.api.ClientBuilder;
 import sx.blah.discord.api.IDiscordClient;
+import sx.blah.discord.api.events.EventDispatcher;
+import sx.blah.discord.api.events.EventSubscriber;
+import sx.blah.discord.api.events.IListener;
+import sx.blah.discord.handle.impl.events.guild.channel.message.MessageReceivedEvent;
+import sx.blah.discord.handle.impl.obj.Message;
+import sx.blah.discord.handle.obj.IMessage;
 
 public enum MagicBot {
     INSTANCE;
@@ -40,12 +47,39 @@ public enum MagicBot {
         return authToken.replace(DISCORD_BOT_PREFIX, "");
     }
 
+    @EventSubscriber
+    public void onMessageEvent(MessageReceivedEvent event) {
+        IMessage message = event.getMessage();
+        String messageText = message.getContent();
+        String[] messageParts = messageText.split(" ");
+
+        String providedCommandName = null;
+        if (messageParts.length > 0) {
+            providedCommandName = messageParts[0];
+        }
+
+        if (plugins.keySet().contains(providedCommandName) != true) {
+            return;
+        }
+
+        String[] providedCommandParams = new String[] {};
+        if (messageParts.length > 1) {
+            providedCommandParams = Arrays.copyOfRange(messageParts, 1, messageParts.length);
+        }
+
+        IPlugin plugin = plugins.get(providedCommandName);
+        plugin.invokeCommand(providedCommandParams);
+    }
+
     public void registerPlugin(IPlugin plugin) {
         String commandName = plugin.getCommandName();
         if (plugins.containsKey(commandName)) {
             throw new KeyAlreadyExistsException();
         }
 
+
+        EventDispatcher dispatcher = client.getDispatcher();
+        dispatcher.registerListener(plugin);
         plugins.put(commandName, plugin);
     }
 
