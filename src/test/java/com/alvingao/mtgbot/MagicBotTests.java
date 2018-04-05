@@ -48,7 +48,7 @@ class MagicBotTests extends TestBase {
         Mockito.when(firstPlugin.getCommandName()).thenReturn(COMMAND_ONE_NAME);
         MagicBot.INSTANCE.registerPlugin(firstPlugin);
 
-        IPlugin secondPlugin = Mockito.mock(IPlugin.class);
+        final IPlugin secondPlugin = Mockito.mock(IPlugin.class);
         Mockito.when(secondPlugin.getCommandName()).thenReturn(COMMAND_ONE_NAME);
         Executable registerFn = new Executable() {
             public void execute() throws Throwable {
