@@ -1,0 +1,41 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "identifier": "build",
+            "label": "Compile Application",
+            "type": "shell",
+            "command": "mvn",
+            "args": [
+                "compile"
+            ],
+            "group": {
+                "isDefault": true,
+                "kind": "build"
+            },
+            "dependsOn": "clean"
+        },
+        {
+            "identifier": "clean",
+            "label": "Clean",
+            "type": "shell",
+            "command": "mvn",
+            "args": [
+                "clean"
+            ]
+        },
+        {
+            "identifier": "test",
+            "label": "Run Unit Tests",
+            "type": "shell",
+            "command": "mvn",
+            "args": [
+                "test"
+            ],
+            "group": {
+                "kind": "test",
+                "isDefault": true
+            }
+        }
+    ]
+}

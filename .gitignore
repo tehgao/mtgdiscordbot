@@ -46,9 +46,6 @@ logs/
 /*.sublime*
 .sublime-gulp.cache
 
-# VS Code
-/.vscode
-
 # JetBrains IDEs
 .idea/
 *.iml
@@ -64,6 +61,14 @@ nb-configuration*.xml
 
 # BlueJ
 *.ctxt
+
+# Visual Studio Code
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+.history
 
 
 #---------------------------------------#
