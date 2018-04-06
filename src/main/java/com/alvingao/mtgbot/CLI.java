@@ -22,6 +22,10 @@ public final class CLI {
 
     private static Options consoleFlags = new Options();
 
+    /**
+     * Application entrypoint; builds the expected CLI input and compares the input from the user against that.
+     * If the user's input is valid, authenticates and connects an instance of MagicBot to a Discord Server.
+     */
     public static void main(String... args) {
         createConsoleFlag(TOKEN_FLAG_SHORT, TOKEN_FLAG_LONG, TOKEN_FLAG_DESCRIPTION, true);
 
@@ -43,6 +47,14 @@ public final class CLI {
         }
     }
 
+    /**
+     * Creates a flag that can be used from the CLI interface.
+     *
+     * @param shortFlag     the shorthand flag that can be used with a single dash (e.g. 'do_something -A')
+     * @param longFlag      the full flag that can be used with two dashes (e.g. 'do_something --a_flag')
+     * @param description   the displayed message for this flag in the help message output
+     * @param isRequired    whether the flag should be required in order for the CLI to run
+     */
     private static void createConsoleFlag(String shortFlag, String longFlag, String description, Boolean isRequired) {
         Builder optBuilder = Option.builder(shortFlag);
         optBuilder.required(isRequired);
@@ -54,6 +66,9 @@ public final class CLI {
         consoleFlags.addOption(newFlag);
     }
 
+    /**
+     * Builds a well-formatted help message from the CLI configured options/flags.
+     */
     private static void printHelpMessage() {
         HelpFormatter hFormatter = new HelpFormatter();
         hFormatter.printHelp(DEFAULT_CONSOLE_WIDTH, HELP_MESSAGE_SYNTAX, HELP_MESSAGE_HEADER, consoleFlags, HELP_MESSAGE_FOOTER);
