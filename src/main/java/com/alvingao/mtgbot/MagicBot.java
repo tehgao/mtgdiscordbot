@@ -1,6 +1,5 @@
 package com.alvingao.mtgbot;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.regex.Pattern;
 
