@@ -71,11 +71,11 @@ public enum MagicBot {
         plugins.put(commandIdentifier, plugin);
     }
 
-    public Boolean tryInvokePluginCommand(String messageText, String... commandArgs) {
+    public Boolean tryInvokePluginCommand(String messageText) {
         IPlugin plugin = plugins.get(messageText);
         Boolean pluginExists = plugin != null;
         if (pluginExists) {
-            plugin.invokeCommand(commandArgs);
+            plugin.invokeCommand(messageText);
         }
 
         return pluginExists;
