@@ -2,6 +2,7 @@ package com.alvingao.mtgbot;
 
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.regex.Pattern;
 
 import javax.management.openmbean.KeyAlreadyExistsException;
 
@@ -49,40 +50,29 @@ public enum MagicBot {
     public void onMessageEvent(MessageReceivedEvent event) {
         IMessage message = event.getMessage();
         String messageText = message.getContent();
-        String[] messageParts = messageText.split(" ");
 
-        String providedCommandName = null;
-        if (messageParts.length > 0) {
-            providedCommandName = messageParts[0];
-        }
-
-        if (plugins.keySet().contains(providedCommandName) != true) {
-            return;
-        }
-
-        String[] providedCommandParams = new String[] {};
-        if (messageParts.length > 1) {
-            providedCommandParams = Arrays.copyOfRange(messageParts, 1, messageParts.length);
-        }
-
-        IPlugin plugin = plugins.get(providedCommandName);
-        plugin.invokeCommand(providedCommandParams);
+        plugins.forEach((identifier, plugin) -> {
+            String triggerPattern = plugin.getTriggerPattern();
+            if (Pattern.matches(triggerPattern, messageText)) {
+                plugin.invokeCommand(messageText);
+            }
+        });
     }
 
     public void registerPlugin(IPlugin plugin) {
-        String commandName = plugin.getCommandName();
-        if (plugins.containsKey(commandName)) {
+        String commandIdentifier = plugin.getCommandIdentifier();
+        if (plugins.containsKey(commandIdentifier)) {
             throw new KeyAlreadyExistsException();
         }
 
 
         EventDispatcher dispatcher = client.getDispatcher();
         dispatcher.registerListener(plugin);
-        plugins.put(commandName, plugin);
+        plugins.put(commandIdentifier, plugin);
     }
 
-    public Boolean tryInvokePluginCommand(String commandName, String... commandArgs) {
-        IPlugin plugin = plugins.get(commandName);
+    public Boolean tryInvokePluginCommand(String messageText, String... commandArgs) {
+        IPlugin plugin = plugins.get(messageText);
         Boolean pluginExists = plugin != null;
         if (pluginExists) {
             plugin.invokeCommand(commandArgs);

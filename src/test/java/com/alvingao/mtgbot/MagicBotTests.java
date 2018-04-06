@@ -14,8 +14,8 @@ import sx.blah.discord.util.DiscordException;
 
 @DisplayName("MTG Bot Tests")
 class MagicBotTests extends TestBase {
-    protected static final String COMMAND_ONE_NAME = "c1";
-    protected static final String COMMAND_TWO_NAME = "c2";
+    protected static final String COMMAND_ONE_IDENTIFIER = "c1";
+    protected static final String COMMAND_TWO_IDENTIFIER = "c2";
 
     @Test
     public void shouldTryAuthenticating_WhenNoAuthorizationTokenProvided_AndThrowException() {
@@ -36,7 +36,7 @@ class MagicBotTests extends TestBase {
     @Test
     public void shouldTryRegisteringPlugin_WhenProvidedPluginWithUniqueName_AndRegisterSuccessfully() {
         IPlugin plugin = Mockito.mock(IPlugin.class);
-        Mockito.when(plugin.getCommandName()).thenReturn(COMMAND_ONE_NAME);
+        Mockito.when(plugin.getCommandIdentifier()).thenReturn(COMMAND_ONE_IDENTIFIER);
         MagicBot.INSTANCE.registerPlugin(plugin);
         Assertions.assertEquals(1, MagicBot.plugins.size());
         Assertions.assertTrue(MagicBot.plugins.values().contains(plugin));
@@ -45,11 +45,11 @@ class MagicBotTests extends TestBase {
     @Test
     public void shouldTryRegisteringPlugin_WhenProvidedPluginWithDuplicateName_AndThrowException() {
         IPlugin firstPlugin = Mockito.mock(IPlugin.class);
-        Mockito.when(firstPlugin.getCommandName()).thenReturn(COMMAND_ONE_NAME);
+        Mockito.when(firstPlugin.getCommandIdentifier()).thenReturn(COMMAND_ONE_IDENTIFIER);
         MagicBot.INSTANCE.registerPlugin(firstPlugin);
 
         final IPlugin secondPlugin = Mockito.mock(IPlugin.class);
-        Mockito.when(secondPlugin.getCommandName()).thenReturn(COMMAND_ONE_NAME);
+        Mockito.when(secondPlugin.getCommandIdentifier()).thenReturn(COMMAND_ONE_IDENTIFIER);
         Executable registerFn = new Executable() {
             public void execute() throws Throwable {
                 MagicBot.INSTANCE.registerPlugin(secondPlugin);
@@ -68,10 +68,10 @@ class MagicBotTests extends TestBase {
     @Test
     public void shouldTryInvokingCommand_WhenCommandWithNameDoesExist_AndReturnTrue() {
         IPlugin firstPlugin = Mockito.mock(IPlugin.class);
-        Mockito.when(firstPlugin.getCommandName()).thenReturn(COMMAND_ONE_NAME);
+        Mockito.when(firstPlugin.getCommandIdentifier()).thenReturn(COMMAND_ONE_IDENTIFIER);
         MagicBot.INSTANCE.registerPlugin(firstPlugin);
 
-        Boolean wasAbleToRunCommand = MagicBot.INSTANCE.tryInvokePluginCommand(COMMAND_ONE_NAME);
+        Boolean wasAbleToRunCommand = MagicBot.INSTANCE.tryInvokePluginCommand(COMMAND_ONE_IDENTIFIER);
         Assertions.assertTrue(wasAbleToRunCommand);
     }
 }
