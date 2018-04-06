@@ -30,6 +30,7 @@ abstract class TestBase {
          IDiscordClient mockDiscordClient = Mockito.spy(MagicBot.client);
          Mockito.doNothing().when(mockDiscordClient).login();
          Mockito.doNothing().when(mockDiscordClient).logout();
+         Mockito.doReturn(true).when(mockDiscordClient).isLoggedIn();
          MagicBot.client = mockDiscordClient;
     }
 

@@ -34,7 +34,8 @@ public final class CLI {
                 return;
             }
 
-            MagicBot.INSTANCE.connect(authToken);
+            MagicBot.INSTANCE.authenticate(authToken);
+            MagicBot.INSTANCE.tryConnect();
         } catch (ParseException pEx) {
             System.err.print(pEx.getMessage());
             printHelpMessage();
