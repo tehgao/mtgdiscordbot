@@ -36,6 +36,17 @@
                 "kind": "test",
                 "isDefault": true
             }
+        },
+        {
+            "identifier": "run",
+            "label": "Run App",
+            "type": "shell",
+            "command": "mvn",
+            "args": [
+                "test",
+                "-Pmagic-bot"
+            ],
+            "problemMatcher": []
         }
     ]
 }
