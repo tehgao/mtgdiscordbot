@@ -46,9 +46,6 @@ logs/
 /*.sublime*
 .sublime-gulp.cache
 
-# VS Code
-/.vscode
-
 # JetBrains IDEs
 .idea/
 *.iml
