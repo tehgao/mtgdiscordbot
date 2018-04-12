@@ -3,7 +3,9 @@ package com.alvingao.mtgbot.client;
 import java.util.HashMap;
 
 import com.alvingao.mtgbot.plugins.IClientPlugin;
+import com.alvingao.mtgbot.utils.ErrorMessages;
 import com.google.inject.Inject;
+import com.google.inject.Singleton;
 
 import org.apache.logging.log4j.Logger;
 
@@ -15,6 +17,7 @@ import sx.blah.discord.util.MessageBuilder;
 /**
  * A bot that processes Discord messages and generates custom responses based on behaviors specified by plugins.
  */
+@Singleton
 public class MagicBot {
     private final HashMap<String, IClientPlugin> plugins = new HashMap<String, IClientPlugin>();
     private final IDiscordClient client;
@@ -54,7 +57,7 @@ public class MagicBot {
     public Boolean tryRegisterPlugin(IClientPlugin plugin) {
         String pluginIdentifier = plugin.getPluginIdentifier();
         if (plugins.containsKey(pluginIdentifier)) {
-            String message = String.format(MagicBotMessages.PLUGIN_IDENTIFIER_ALREADY_EXISTS, pluginIdentifier);
+            String message = String.format(ErrorMessages.PLUGIN_IDENTIFIER_ALREADY_EXISTS, pluginIdentifier);
             logger.error(message);
             return false;
         }
