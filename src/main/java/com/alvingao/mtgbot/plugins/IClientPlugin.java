@@ -1,7 +1,6 @@
 package com.alvingao.mtgbot.plugins;
 
-import sx.blah.discord.handle.obj.IMessage;
-import sx.blah.discord.util.MessageBuilder;
+import sx.blah.discord.handle.impl.events.guild.channel.message.MessageReceivedEvent;
 
 /**
  * Represents a plugin that can be registered with an instance of MagicBot.
@@ -17,16 +16,15 @@ public interface IClientPlugin {
     /**
      * Returns whether this plugin can handle a given message.
      *
-     * @param messageContent the message to check
+     * @param event the message event to check
      * @return whether or not the message can be processed by the plugin
      */
-    public Boolean canHandleMessage(String messageContent);
+    public Boolean canHandleMessage(MessageReceivedEvent event);
 
     /**
      * Attempts to process the provided message using the plugin.
      *
-     * @param messageContent the message to process
-     * @param responseBuilder a MessageBuilder with the client and channel already set
+     * @param event the message event to process
      */
-    public IMessage handleMessage(String messageContent, MessageBuilder responseBuilder);
+    public void handleMessage(MessageReceivedEvent event);
 }

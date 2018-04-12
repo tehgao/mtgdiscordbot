@@ -4,15 +4,12 @@ import java.util.HashMap;
 
 import com.alvingao.mtgbot.plugins.IClientPlugin;
 import com.google.inject.Inject;
-import com.google.inject.spi.Message;
 
 import org.apache.logging.log4j.Logger;
 
 import sx.blah.discord.api.IDiscordClient;
 import sx.blah.discord.api.events.EventSubscriber;
 import sx.blah.discord.handle.impl.events.guild.channel.message.MessageReceivedEvent;
-import sx.blah.discord.handle.obj.IChannel;
-import sx.blah.discord.handle.obj.IMessage;
 import sx.blah.discord.util.MessageBuilder;
 
 /**
@@ -30,11 +27,10 @@ public class MagicBot {
     }
 
     /**
-     *
+     * Creates a new MessageBuilder using the underlying IDiscordClient instance.
      */
-    public MessageBuilder createMessageBuilder(IChannel channel) {
-
-        return builder;
+    public MessageBuilder createMessageBuilder() {
+        return new MessageBuilder(client);
     }
 
     /**
@@ -42,15 +38,9 @@ public class MagicBot {
      */
     @EventSubscriber
     public void onMessageReceived(MessageReceivedEvent event) {
-        IChannel channel = event.getChannel();
-        IMessage message = event.getMessage();
-        String messageContent = message.getContent();
-
         plugins.forEach((identifier, plugin) -> {
-            if (plugin.canHandleMessage(messageContent)) {
-                MessageBuilder responseBuilder = new MessageBuilder(client);
-                responseBuilder.withChannel(channel);
-                plugin.handleMessage(messageContent, responseBuilder);
+            if (plugin.canHandleMessage(event)) {
+                plugin.handleMessage(event);
             }
         });
     }
@@ -71,5 +61,16 @@ public class MagicBot {
 
         plugins.put(pluginIdentifier, plugin);
         return true;
+    }
+
+    /**
+     * Attempts to disable and remove the specified plugin.
+     *
+     * @param pluginIdentifier the registered identifier of the plugin
+     * @return whether the plugin was successfully unregistered
+     */
+    public Boolean tryUnregisterPlugin(String pluginIdentifier) {
+        IClientPlugin plugin = plugins.get(pluginIdentifier);
+        return plugins.remove(pluginIdentifier, plugin);
     }
 }
