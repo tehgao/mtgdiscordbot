@@ -37,6 +37,9 @@ hs_err_pid*
 log/
 logs/
 
+# Config file
+config.properties
+
 
 #---------------------------------------#
 # IDEs & Editors Ignores                #
