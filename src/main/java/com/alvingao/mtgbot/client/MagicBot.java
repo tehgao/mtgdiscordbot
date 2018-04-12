@@ -2,7 +2,7 @@ package com.alvingao.mtgbot.client;
 
 import java.util.HashMap;
 
-import com.alvingao.mtgbot.plugins.IClientPlugin;
+import com.alvingao.mtgbot.plugins.IMagicBotPlugin;
 import com.alvingao.mtgbot.utils.ErrorMessages;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
@@ -19,7 +19,7 @@ import sx.blah.discord.util.MessageBuilder;
  */
 @Singleton
 public class MagicBot {
-    private final HashMap<String, IClientPlugin> plugins = new HashMap<String, IClientPlugin>();
+    private final HashMap<String, IMagicBotPlugin> plugins = new HashMap<String, IMagicBotPlugin>();
     private final IDiscordClient client;
     private final Logger logger;
 
@@ -54,7 +54,7 @@ public class MagicBot {
      * @param plugin the plugin to register
      * @return whether the plugin registered successfully
      */
-    public Boolean tryRegisterPlugin(IClientPlugin plugin) {
+    public boolean tryRegisterPlugin(IMagicBotPlugin plugin) {
         String pluginIdentifier = plugin.getPluginIdentifier();
         if (plugins.containsKey(pluginIdentifier)) {
             String message = String.format(ErrorMessages.PLUGIN_IDENTIFIER_ALREADY_EXISTS, pluginIdentifier);
@@ -72,8 +72,8 @@ public class MagicBot {
      * @param pluginIdentifier the registered identifier of the plugin
      * @return whether the plugin was successfully unregistered
      */
-    public Boolean tryUnregisterPlugin(String pluginIdentifier) {
-        IClientPlugin plugin = plugins.get(pluginIdentifier);
+    public boolean tryUnregisterPlugin(String pluginIdentifier) {
+        IMagicBotPlugin plugin = plugins.get(pluginIdentifier);
         return plugins.remove(pluginIdentifier, plugin);
     }
 }

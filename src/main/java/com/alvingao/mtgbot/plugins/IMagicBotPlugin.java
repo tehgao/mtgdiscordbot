@@ -5,7 +5,7 @@ import sx.blah.discord.handle.impl.events.guild.channel.message.MessageReceivedE
 /**
  * Represents a plugin that can be registered with an instance of MagicBot.
  */
-public interface IClientPlugin {
+public interface IMagicBotPlugin {
     /**
      * Returns the identifier used to register this plugin with an instance of MagicBot.
      *
@@ -19,7 +19,7 @@ public interface IClientPlugin {
      * @param event the message event to check
      * @return whether or not the message can be processed by the plugin
      */
-    public Boolean canHandleMessage(MessageReceivedEvent event);
+    public boolean canHandleMessage(MessageReceivedEvent event);
 
     /**
      * Attempts to process the provided message using the plugin.
