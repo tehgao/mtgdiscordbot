@@ -44,9 +44,9 @@ public class ScryfallPlugin implements IMagicBotPlugin {
 
 	@Override
 	public void handleMessage(MessageReceivedEvent event) {
-        // TODO: Implement
         MessageBuilder responseBuilder = botInstance.createMessageBuilder();
+        responseBuilder.withContent("PLACEHOLDER_TEXT");
+        responseBuilder.withChannel(event.getChannel());
         responseBuilder.build();
 	}
-
 }
