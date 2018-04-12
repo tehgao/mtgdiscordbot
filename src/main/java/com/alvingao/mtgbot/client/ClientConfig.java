@@ -1,6 +1,7 @@
 package com.alvingao.mtgbot.client;
 
 import com.google.inject.Inject;
+import com.google.inject.Singleton;
 
 import sx.blah.discord.api.IDiscordClient;
 import sx.blah.discord.api.events.EventDispatcher;
@@ -9,6 +10,7 @@ import sx.blah.discord.modules.IModule;
 /**
  * Registers a MagicBot instance as a message handler when the app starts up.
  */
+@Singleton
 public final class ClientConfig implements IModule {
     public static final String AUTH_TOKEN_KEY = "authorization_token";
     public static final String BOT_AUTHOR = "alvingao";
